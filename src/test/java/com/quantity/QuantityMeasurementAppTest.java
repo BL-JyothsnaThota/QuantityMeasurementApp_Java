@@ -5,40 +5,59 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class QuantityMeasurementAppTest {
 
+    // -------- FEET TESTS --------
+
     @Test
     void givenSameFeetValue_whenCompared_shouldReturnTrue() {
-        QuantityMeasurementApp.Feet feet1 = new QuantityMeasurementApp.Feet(1.0);
-        QuantityMeasurementApp.Feet feet2 = new QuantityMeasurementApp.Feet(1.0);
-
-        assertTrue(feet1.equals(feet2));
+        assertTrue(QuantityMeasurementApp.compareFeet(1.0, 1.0));
     }
 
     @Test
     void givenDifferentFeetValue_whenCompared_shouldReturnFalse() {
-        QuantityMeasurementApp.Feet feet1 = new QuantityMeasurementApp.Feet(1.0);
-        QuantityMeasurementApp.Feet feet2 = new QuantityMeasurementApp.Feet(2.0);
+        assertFalse(QuantityMeasurementApp.compareFeet(1.0, 2.0));
+    }
 
-        assertFalse(feet1.equals(feet2));
+    // -------- INCH TESTS --------
+
+    @Test
+    void givenSameInchValue_whenCompared_shouldReturnTrue() {
+        assertTrue(QuantityMeasurementApp.compareInch(1.0, 1.0));
     }
 
     @Test
-    void givenFeetValue_whenComparedWithNull_shouldReturnFalse() {
-        QuantityMeasurementApp.Feet feet = new QuantityMeasurementApp.Feet(1.0);
+    void givenDifferentInchValue_whenCompared_shouldReturnFalse() {
+        assertFalse(QuantityMeasurementApp.compareInch(1.0, 2.0));
+    }
 
+    // -------- COMMON TESTS --------
+
+    @Test
+    void givenFeet_whenComparedWithNull_shouldReturnFalse() {
+        QuantityMeasurementApp.Feet feet = new QuantityMeasurementApp.Feet(1.0);
         assertFalse(feet.equals(null));
     }
 
     @Test
-    void givenFeetValue_whenComparedWithDifferentType_shouldReturnFalse() {
-        QuantityMeasurementApp.Feet feet = new QuantityMeasurementApp.Feet(1.0);
-
-        assertFalse(feet.equals("1.0"));
+    void givenInch_whenComparedWithNull_shouldReturnFalse() {
+        QuantityMeasurementApp.Inch inch = new QuantityMeasurementApp.Inch(1.0);
+        assertFalse(inch.equals(null));
     }
 
     @Test
-    void givenSameReference_whenCompared_shouldReturnTrue() {
+    void givenFeet_whenComparedWithDifferentType_shouldReturnFalse() {
         QuantityMeasurementApp.Feet feet = new QuantityMeasurementApp.Feet(1.0);
+        assertFalse(feet.equals(new QuantityMeasurementApp.Inch(1.0)));
+    }
 
+    @Test
+    void givenSameFeetReference_shouldReturnTrue() {
+        QuantityMeasurementApp.Feet feet = new QuantityMeasurementApp.Feet(1.0);
         assertTrue(feet.equals(feet));
+    }
+
+    @Test
+    void givenSameInchReference_shouldReturnTrue() {
+        QuantityMeasurementApp.Inch inch = new QuantityMeasurementApp.Inch(1.0);
+        assertTrue(inch.equals(inch));
     }
 }
