@@ -5,7 +5,9 @@ public class QuantityMeasurementApp {
     // -------- ENUM --------
     public enum LengthUnit {
         FEET(1.0),
-        INCH(1.0 / 12.0);
+        INCHES(1.0 / 12.0),
+        YARDS(3.0),
+        CENTIMETERS(0.393701 / 12.0); // cm → feet
 
         private final double toFeetFactor;
 
@@ -24,6 +26,9 @@ public class QuantityMeasurementApp {
         private final LengthUnit unit;
 
         public Quantity(double value, LengthUnit unit) {
+            if (unit == null) {
+                throw new IllegalArgumentException("Unit cannot be null");
+            }
             this.value = value;
             this.unit = unit;
         }
@@ -36,16 +41,13 @@ public class QuantityMeasurementApp {
         public boolean equals(Object obj) {
 
             // Reflexive
-            if (this == obj)
-                return true;
+            if (this == obj) return true;
 
-            // Null & type check
-            if (obj == null || getClass() != obj.getClass())
-                return false;
+            // Null + type
+            if (obj == null || getClass() != obj.getClass()) return false;
 
             Quantity other = (Quantity) obj;
 
-            // Compare after conversion
             return Double.compare(this.toBaseUnit(), other.toBaseUnit()) == 0;
         }
     }
@@ -53,8 +55,8 @@ public class QuantityMeasurementApp {
     // -------- MAIN --------
     public static void main(String[] args) {
 
-        Quantity q1 = new Quantity(1.0, LengthUnit.FEET);
-        Quantity q2 = new Quantity(12.0, LengthUnit.INCH);
+        Quantity q1 = new Quantity(1.0, LengthUnit.YARDS);
+        Quantity q2 = new Quantity(3.0, LengthUnit.FEET);
 
         System.out.println("Are equal: " + q1.equals(q2));
     }

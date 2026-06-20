@@ -5,95 +5,72 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class QuantityMeasurementAppTest {
 
-    // -------- SAME UNIT TESTS --------
-
     @Test
-    void givenFeetToFeet_sameValue_shouldReturnTrue() {
-        QuantityMeasurementApp.Quantity q1 =
-                new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.FEET);
-        QuantityMeasurementApp.Quantity q2 =
-                new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.FEET);
+    void testYardToYard() {
+        var q1 = new QuantityMeasurementApp.Quantity(1, QuantityMeasurementApp.LengthUnit.YARDS);
+        var q2 = new QuantityMeasurementApp.Quantity(1, QuantityMeasurementApp.LengthUnit.YARDS);
 
-        assertTrue(q1.equals(q2));
+        assertEquals(q1, q2);
     }
 
     @Test
-    void givenInchToInch_sameValue_shouldReturnTrue() {
-        QuantityMeasurementApp.Quantity q1 =
-                new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.INCH);
-        QuantityMeasurementApp.Quantity q2 =
-                new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.INCH);
+    void testYardToFeet() {
+        var q1 = new QuantityMeasurementApp.Quantity(1, QuantityMeasurementApp.LengthUnit.YARDS);
+        var q2 = new QuantityMeasurementApp.Quantity(3, QuantityMeasurementApp.LengthUnit.FEET);
 
-        assertTrue(q1.equals(q2));
-    }
-
-    // -------- CROSS UNIT TESTS --------
-
-    @Test
-    void givenFeetAndInch_equivalent_shouldReturnTrue() {
-        QuantityMeasurementApp.Quantity feet =
-                new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.FEET);
-        QuantityMeasurementApp.Quantity inch =
-                new QuantityMeasurementApp.Quantity(12.0, QuantityMeasurementApp.LengthUnit.INCH);
-
-        assertTrue(feet.equals(inch));
+        assertEquals(q1, q2);
     }
 
     @Test
-    void givenInchAndFeet_equivalent_shouldReturnTrue() {
-        QuantityMeasurementApp.Quantity inch =
-                new QuantityMeasurementApp.Quantity(12.0, QuantityMeasurementApp.LengthUnit.INCH);
-        QuantityMeasurementApp.Quantity feet =
-                new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.FEET);
+    void testYardToInches() {
+        var q1 = new QuantityMeasurementApp.Quantity(1, QuantityMeasurementApp.LengthUnit.YARDS);
+        var q2 = new QuantityMeasurementApp.Quantity(36, QuantityMeasurementApp.LengthUnit.INCHES);
 
-        assertTrue(inch.equals(feet));
-    }
-
-    // -------- NEGATIVE CASES --------
-
-    @Test
-    void givenDifferentFeet_shouldReturnFalse() {
-        QuantityMeasurementApp.Quantity q1 =
-                new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.FEET);
-        QuantityMeasurementApp.Quantity q2 =
-                new QuantityMeasurementApp.Quantity(2.0, QuantityMeasurementApp.LengthUnit.FEET);
-
-        assertFalse(q1.equals(q2));
+        assertEquals(q1, q2);
     }
 
     @Test
-    void givenDifferentInch_shouldReturnFalse() {
-        QuantityMeasurementApp.Quantity q1 =
-                new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.INCH);
-        QuantityMeasurementApp.Quantity q2 =
-                new QuantityMeasurementApp.Quantity(2.0, QuantityMeasurementApp.LengthUnit.INCH);
+    void testCentimeterToInches() {
+        var q1 = new QuantityMeasurementApp.Quantity(1, QuantityMeasurementApp.LengthUnit.CENTIMETERS);
+        var q2 = new QuantityMeasurementApp.Quantity(0.393701, QuantityMeasurementApp.LengthUnit.INCHES);
 
-        assertFalse(q1.equals(q2));
-    }
-
-    // -------- EDGE CASES --------
-
-    @Test
-    void givenSameReference_shouldReturnTrue() {
-        QuantityMeasurementApp.Quantity q =
-                new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.FEET);
-
-        assertTrue(q.equals(q));
+        assertEquals(q1, q2);
     }
 
     @Test
-    void givenNullComparison_shouldReturnFalse() {
-        QuantityMeasurementApp.Quantity q =
-                new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.FEET);
+    void testCentimeterToFeet_NotEqual() {
+        var q1 = new QuantityMeasurementApp.Quantity(1, QuantityMeasurementApp.LengthUnit.CENTIMETERS);
+        var q2 = new QuantityMeasurementApp.Quantity(1, QuantityMeasurementApp.LengthUnit.FEET);
 
-        assertFalse(q.equals(null));
+        assertNotEquals(q1, q2);
     }
 
     @Test
-    void givenDifferentType_shouldReturnFalse() {
-        QuantityMeasurementApp.Quantity q =
-                new QuantityMeasurementApp.Quantity(1.0, QuantityMeasurementApp.LengthUnit.FEET);
+    void testTransitiveProperty() {
+        var yard = new QuantityMeasurementApp.Quantity(1, QuantityMeasurementApp.LengthUnit.YARDS);
+        var feet = new QuantityMeasurementApp.Quantity(3, QuantityMeasurementApp.LengthUnit.FEET);
+        var inches = new QuantityMeasurementApp.Quantity(36, QuantityMeasurementApp.LengthUnit.INCHES);
 
-        assertFalse(q.equals("invalid"));
+        assertEquals(yard, feet);
+        assertEquals(feet, inches);
+        assertEquals(yard, inches);
+    }
+
+    @Test
+    void testSameReference() {
+        var q = new QuantityMeasurementApp.Quantity(1, QuantityMeasurementApp.LengthUnit.YARDS);
+        assertEquals(q, q);
+    }
+
+    @Test
+    void testNullComparison() {
+        var q = new QuantityMeasurementApp.Quantity(1, QuantityMeasurementApp.LengthUnit.YARDS);
+        assertNotEquals(q, null);
+    }
+
+    @Test
+    void testInvalidType() {
+        var q = new QuantityMeasurementApp.Quantity(1, QuantityMeasurementApp.LengthUnit.YARDS);
+        assertNotEquals(q, "invalid");
     }
 }
