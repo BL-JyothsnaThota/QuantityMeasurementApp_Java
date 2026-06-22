@@ -34,14 +34,14 @@ public class QuantityLength {
         }
 
         // Convert both to base (FEET)
-        double thisInFeet = this.unit.toBase(this.value);
-        double otherInFeet = other.unit.toBase(other.value);
+        double thisInFeet = this.unit.convertToBaseUnit(this.value);
+        double otherInFeet = other.unit.convertToBaseUnit(other.value);
 
         // Add
         double sumInFeet = thisInFeet + otherInFeet;
 
         // Convert back to THIS unit
-        double resultValue = this.unit.fromBase(sumInFeet);
+        double resultValue = this.unit.convertFromBaseUnit(sumInFeet);
 
         return new QuantityLength(resultValue, this.unit);
     }
@@ -61,8 +61,8 @@ public class QuantityLength {
 
         QuantityLength that = (QuantityLength) o;
 
-        double thisBase = this.unit.toBase(this.value);
-        double thatBase = that.unit.toBase(that.value);
+        double thisBase = this.unit.convertToBaseUnit(this.value);
+        double thatBase = that.unit.convertToBaseUnit(that.value);
 
         return Math.abs(thisBase - thatBase) < TOLERANCE;
     }
@@ -77,20 +77,33 @@ public class QuantityLength {
         }
 
         // Convert both to base (FEET)
-        double thisInFeet = this.unit.toBase(this.value);
-        double otherInFeet = other.unit.toBase(other.value);
+        double thisInFeet = this.unit.convertToBaseUnit(this.value);
+        double otherInFeet = other.unit.convertToBaseUnit(other.value);
 
         // Add
         double sumInFeet = thisInFeet + otherInFeet;
 
         // Convert to TARGET unit (🔥 UC7 change)
-        double resultValue = targetUnit.fromBase(sumInFeet);
+        double resultValue = targetUnit.convertFromBaseUnit(sumInFeet);
 
         return new QuantityLength(resultValue, targetUnit);
     }
+
+    public QuantityLength convertTo(LengthUnit targetUnit) {
+
+        if (targetUnit == null) {
+            throw new IllegalArgumentException("Target unit cannot be null");
+        }
+
+        double baseValue = this.unit.convertToBaseUnit(this.value);
+
+        double convertedValue = targetUnit.convertFromBaseUnit(baseValue);
+
+        return new QuantityLength(convertedValue, targetUnit);
+    }
     @Override
     public int hashCode() {
-        long rounded = Math.round(unit.toBase(value) / 0.001);
+        long rounded = Math.round(unit.convertToBaseUnit(value) / 0.001);
         return Objects.hash(rounded);
     }
     @Override

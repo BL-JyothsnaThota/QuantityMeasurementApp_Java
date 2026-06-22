@@ -93,8 +93,8 @@ class QuantityLengthTest {
         QuantityLength q1 = new QuantityLength(1, LengthUnit.FEET);
         QuantityLength q2 = new QuantityLength(12, LengthUnit.INCHES);
 
-        double base1 = q1.add(q2).getUnit().toBase(q1.add(q2).getValue());
-        double base2 = q2.add(q1).getUnit().toBase(q2.add(q1).getValue());
+        double base1 = q1.add(q2).getUnit().convertToBaseUnit(q1.add(q2).getValue());
+        double base2 = q2.add(q1).getUnit().convertToBaseUnit(q2.add(q1).getValue());
 
         assertEquals(base1, base2, 0.001);
     }
