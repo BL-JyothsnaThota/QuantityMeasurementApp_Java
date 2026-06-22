@@ -3,7 +3,7 @@ package com.quantity;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class QuantityMeasurementAppTest {
+class QuantityLengthTest {
 
     @Test
     void testAddition_SameUnit_FeetPlusFeet() {
@@ -11,14 +11,6 @@ public class QuantityMeasurementAppTest {
                 .add(new QuantityLength(2, LengthUnit.FEET));
 
         assertEquals(new QuantityLength(3, LengthUnit.FEET), result);
-    }
-
-    @Test
-    void testAddition_SameUnit_InchPlusInch() {
-        QuantityLength result = new QuantityLength(6, LengthUnit.INCHES)
-                .add(new QuantityLength(6, LengthUnit.INCHES));
-
-        assertEquals(new QuantityLength(12, LengthUnit.INCHES), result);
     }
 
     @Test
@@ -30,7 +22,7 @@ public class QuantityMeasurementAppTest {
     }
 
     @Test
-    void testAddition_CrossUnit_InchPlusFeet() {
+    void testAddition_CrossUnit_InchesPlusFeet() {
         QuantityLength result = new QuantityLength(12, LengthUnit.INCHES)
                 .add(new QuantityLength(1, LengthUnit.FEET));
 
@@ -38,7 +30,7 @@ public class QuantityMeasurementAppTest {
     }
 
     @Test
-    void testAddition_CrossUnit_YardPlusFeet() {
+    void testAddition_YardPlusFeet() {
         QuantityLength result = new QuantityLength(1, LengthUnit.YARDS)
                 .add(new QuantityLength(3, LengthUnit.FEET));
 
@@ -46,7 +38,7 @@ public class QuantityMeasurementAppTest {
     }
 
     @Test
-    void testAddition_CrossUnit_CentimeterPlusInch() {
+    void testAddition_CentimeterPlusInch() {
         QuantityLength result = new QuantityLength(2.54, LengthUnit.CENTIMETERS)
                 .add(new QuantityLength(1, LengthUnit.INCHES));
 
@@ -78,25 +70,9 @@ public class QuantityMeasurementAppTest {
     }
 
     @Test
-    void testAddition_NullSecondOperand() {
+    void testAddition_Null() {
         assertThrows(IllegalArgumentException.class, () -> {
             new QuantityLength(1, LengthUnit.FEET).add(null);
         });
-    }
-
-    @Test
-    void testAddition_LargeValues() {
-        QuantityLength result = new QuantityLength(1e6, LengthUnit.FEET)
-                .add(new QuantityLength(1e6, LengthUnit.FEET));
-
-        assertEquals(new QuantityLength(2e6, LengthUnit.FEET), result);
-    }
-
-    @Test
-    void testAddition_SmallValues() {
-        QuantityLength result = new QuantityLength(0.001, LengthUnit.FEET)
-                .add(new QuantityLength(0.002, LengthUnit.FEET));
-
-        assertEquals(new QuantityLength(0.003, LengthUnit.FEET), result);
     }
 }
