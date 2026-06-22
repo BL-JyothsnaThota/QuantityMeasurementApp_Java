@@ -3,21 +3,16 @@ package com.quantity;
 public class QuantityMeasurementApp {
     public static void main(String[] args) {
 
-        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.FEET);
-        QuantityLength q2 = new QuantityLength(12.0, LengthUnit.INCHES);
+        QuantityLength q1 = new QuantityLength(1, LengthUnit.FEET);
+        QuantityLength q2 = new QuantityLength(12, LengthUnit.INCHES);
 
-        QuantityLength result = q1.add(q2);
+        System.out.println(q1.add(q2, LengthUnit.FEET));       // 2 FEET
+        System.out.println(q1.add(q2, LengthUnit.INCHES));     // 24 INCHES
+        System.out.println(q1.add(q2, LengthUnit.YARDS));      // ~0.667 YARDS
 
-        System.out.println("Result: " + result);
-
-        // More examples
-        System.out.println(new QuantityLength(12, LengthUnit.INCHES)
-                .add(new QuantityLength(1, LengthUnit.FEET)));
-
-        System.out.println(new QuantityLength(1, LengthUnit.YARDS)
-                .add(new QuantityLength(3, LengthUnit.FEET)));
-
-        System.out.println(new QuantityLength(2.54, LengthUnit.CENTIMETERS)
-                .add(new QuantityLength(1, LengthUnit.INCHES)));
+        System.out.println(
+            new QuantityLength(36, LengthUnit.INCHES)
+                .add(new QuantityLength(1, LengthUnit.YARDS), LengthUnit.FEET)
+        );
     }
 }

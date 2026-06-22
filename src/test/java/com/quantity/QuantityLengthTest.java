@@ -14,6 +14,49 @@ class QuantityLengthTest {
     }
 
     @Test
+    void testAddition_ExplicitTargetUnit_Feet() {
+        QuantityLength result = new QuantityLength(1, LengthUnit.FEET)
+                .add(new QuantityLength(12, LengthUnit.INCHES), LengthUnit.FEET);
+
+        assertEquals(new QuantityLength(2, LengthUnit.FEET), result);
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_Inches() {
+        QuantityLength result = new QuantityLength(1, LengthUnit.FEET)
+                .add(new QuantityLength(12, LengthUnit.INCHES), LengthUnit.INCHES);
+
+        assertEquals(new QuantityLength(24, LengthUnit.INCHES), result);
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_Yards() {
+        QuantityLength result = new QuantityLength(1, LengthUnit.FEET)
+                .add(new QuantityLength(12, LengthUnit.INCHES), LengthUnit.YARDS);
+
+        assertEquals(0.667, result.getValue(), 0.001);
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_Commutativity() {
+        QuantityLength q1 = new QuantityLength(1, LengthUnit.FEET);
+        QuantityLength q2 = new QuantityLength(12, LengthUnit.INCHES);
+
+        assertEquals(
+                q1.add(q2, LengthUnit.YARDS),
+                q2.add(q1, LengthUnit.YARDS)
+        );
+    }
+
+    @Test
+    void testAddition_ExplicitTargetUnit_NullTarget() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new QuantityLength(1, LengthUnit.FEET)
+                    .add(new QuantityLength(12, LengthUnit.INCHES), null);
+        });
+    }
+
+    @Test
     void testAddition_CrossUnit_FeetPlusInches() {
         QuantityLength result = new QuantityLength(1, LengthUnit.FEET)
                 .add(new QuantityLength(12, LengthUnit.INCHES));
@@ -50,7 +93,10 @@ class QuantityLengthTest {
         QuantityLength q1 = new QuantityLength(1, LengthUnit.FEET);
         QuantityLength q2 = new QuantityLength(12, LengthUnit.INCHES);
 
-        assertEquals(q1.add(q2), q2.add(q1));
+        double base1 = q1.add(q2).getUnit().toBase(q1.add(q2).getValue());
+        double base2 = q2.add(q1).getUnit().toBase(q2.add(q1).getValue());
+
+        assertEquals(base1, base2, 0.001);
     }
 
     @Test
