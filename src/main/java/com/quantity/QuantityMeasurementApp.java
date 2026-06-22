@@ -14,5 +14,13 @@ public class QuantityMeasurementApp {
             new QuantityLength(36, LengthUnit.INCHES)
                 .add(new QuantityLength(1, LengthUnit.YARDS), LengthUnit.FEET)
         );
+        QuantityWeight w1 = new QuantityWeight(1, WeightUnit.KILOGRAM);
+        QuantityWeight w2 = new QuantityWeight(1000, WeightUnit.GRAM);
+
+        System.out.println(w1.equals(w2)); // true
+
+        System.out.println(w1.add(w2)); // 2 KG
+
+        System.out.println(w1.add(w2, WeightUnit.GRAM)); // 2000 GRAM
     }
 }
